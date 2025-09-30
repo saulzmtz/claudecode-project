@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useExpenses } from '@/lib/hooks/useExpenses';
 import { Navigation } from '@/components/layout/Navigation';
 import { ExpenseForm, ExpenseList, ExpenseFilters } from '@/components/expenses';
-import { ExportButton } from '@/components/expenses/ExportButton';
+import { ExportHub } from '@/components/expenses/ExportHub';
 import { Button, Modal, LoadingSpinner } from '@/components/ui';
 import { ExpenseFormData } from '@/types';
 
@@ -21,6 +21,7 @@ export default function ExpensesPage() {
   } = useExpenses();
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isExportHubOpen, setIsExportHubOpen] = useState(false);
 
   const handleAddExpense = (formData: ExpenseFormData) => {
     addExpense({
@@ -53,7 +54,24 @@ export default function ExpensesPage() {
             </p>
           </div>
           <div className="flex gap-3">
-            <ExportButton expenses={filteredExpenses} />
+            <Button
+              variant="secondary"
+              onClick={() => setIsExportHubOpen(true)}
+              disabled={filteredExpenses.length === 0}
+            >
+              <svg
+                className="w-5 h-5 mr-2 inline-block"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+              </svg>
+              Export Hub
+            </Button>
             <Button onClick={() => setIsAddModalOpen(true)}>
               <svg
                 className="w-5 h-5 mr-2 inline-block"
@@ -107,6 +125,13 @@ export default function ExpensesPage() {
           onCancel={() => setIsAddModalOpen(false)}
         />
       </Modal>
+
+      {/* Export Hub */}
+      <ExportHub
+        isOpen={isExportHubOpen}
+        onClose={() => setIsExportHubOpen(false)}
+        expenses={filteredExpenses}
+      />
     </div>
   );
 }
