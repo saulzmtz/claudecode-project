@@ -41,17 +41,13 @@ jobs:
           cd expense-tracker
           npm run build
 
-      - name: Prepare deployment structure
-        run: |
-          mkdir -p deploy/claudecode-project
-          cp -r expense-tracker/out/* deploy/claudecode-project/
-          cp index.html deploy/
-          touch deploy/.nojekyll
+      - name: Add .nojekyll file
+        run: touch expense-tracker/out/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: deploy
+          path: expense-tracker/out
 
   deploy:
     environment:
