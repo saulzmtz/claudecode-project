@@ -43,8 +43,9 @@ jobs:
 
       - name: Prepare deployment structure
         run: |
-          mkdir -p deploy/claudecode-project/expense-tracker
-          cp -r expense-tracker/out/* deploy/claudecode-project/expense-tracker/
+          mkdir -p deploy/claudecode-project
+          cp -r expense-tracker/out/* deploy/claudecode-project/
+          cp index.html deploy/
           touch deploy/.nojekyll
 
       - name: Upload artifact
